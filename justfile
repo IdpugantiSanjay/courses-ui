@@ -1,6 +1,3 @@
-
-
 docker-push:
-  sudo docker build .
-  sudo docker tag isanjay112/courses-ui:latest
-  sudo docker push
+  sudo docker build -t isanjay112/courses-ui:latest .
+  sudo docker push isanjay112/courses-ui:latest
