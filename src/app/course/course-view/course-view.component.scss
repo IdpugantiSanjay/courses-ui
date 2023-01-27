@@ -1,0 +1,90 @@
+.container {
+  padding: var(--size-5);
+}
+
+
+.course {
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-2);
+
+  &__name {
+    font-size: var(--size-5);
+  }
+
+  &__meta {
+    display: flex;
+    align-items: center;
+    font-size: var(--size-4);
+    font-weight: var(--font-weight-3);
+    gap: var(--size-5);
+
+    &__duration {
+      display: flex;
+      align-items: center;
+
+      gap: var(--size-1);
+    }
+
+    &__watchInfo {
+      display: flex;
+      gap: var(--size-4);
+    }
+
+    &__progress {
+      display: flex;
+      align-items: center;
+      gap: var(--size-3);
+    }
+  }
+
+
+  &__entries {
+    &__entry {
+      display: flex;
+      flex-direction: column;
+      gap: var(--size-4);
+
+      svg {
+        cursor: pointer;
+      }
+
+      padding: var(--size-3);
+      background-color: var(--gray-4);
+      margin-bottom: var(--size-2);
+
+      & div:first-child {
+        display: flex;
+        align-items: center;
+        gap: var(--size-2);
+      }
+
+
+      & div:nth-child(2) {
+        display: flex;
+        align-items: center;
+        gap: var(--size-1);
+      }
+
+      &__name {
+        font-size: var(--size-4);
+      }
+
+      &__watched {
+        opacity: 0.4;
+      }
+    }
+  }
+
+}
+
+label {
+  font-size: var(--size-4);
+}
+
+
+input[type="text"] {
+  background-color: var(--gray-5);
+}
+
+
