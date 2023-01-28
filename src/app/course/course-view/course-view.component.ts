@@ -12,7 +12,7 @@ import {Title} from "@angular/platform-browser";
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CourseViewComponent implements OnInit {
-  course: GetCourseView | undefined
+  course!: GetCourseView
   watchedInfo: GetWatchedResponse | undefined
   search = new FormControl('')
 
@@ -24,12 +24,28 @@ export class CourseViewComponent implements OnInit {
     return this.course?.entries
   }
 
+  get hasSections(): boolean {
+    if (this.course?.entries?.length) {
+      return !!this.course!.entries[0].section
+    }
+    return false
+  }
+
+  get sections() {
+    const sections = [...this.course.entries?.map(c => c.section)!]
+    return new Set([...sections.filter(s => this.filteredCourseEntries!.filter(e => e.section == s).length > 0)])
+  }
+
   constructor(private readonly route: ActivatedRoute, private readonly service: CourseService, private readonly titleService: Title) {
+  }
+
+  get formattedProgress() {
+    return Math.round(this.watchedInfo?.progress || 0)
   }
 
   ngOnInit(): void {
     this.route.data.subscribe(({vm}) => {
-      const { course, watchedInfo } = vm;
+      const {course, watchedInfo} = vm;
       this.course = course
       this.watchedInfo = watchedInfo
 
@@ -48,5 +64,10 @@ export class CourseViewComponent implements OnInit {
         this.service.RemoveWatched(this.course!.id, entryId).subscribe()
       }
     }
+  }
+
+
+  sectionEntries(section: string) {
+    return this.filteredCourseEntries?.filter(c => c.section === section)
   }
 }

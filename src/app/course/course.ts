@@ -16,6 +16,7 @@ export interface CourseEntry {
   duration: string;
   isHighDefinition: boolean;
   watched: boolean
+  section: string
 }
 
 

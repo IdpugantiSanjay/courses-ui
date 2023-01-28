@@ -1,0 +1,50 @@
+.course__entries {
+  &__entry {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-4);
+    border-radius: var(--radius-1);
+
+    svg {
+      cursor: pointer;
+    }
+
+    padding: var(--size-3);
+    background-color: var(--gray-7);
+    margin-bottom: var(--size-2);
+
+
+    &__second_row {
+      display: flex;
+      align-items: baseline;
+      font-size: var(--size-2_point_5);
+      gap: var(--size-1);
+      justify-content: space-between;
+
+      &__duration {
+        display: flex;
+        gap: var(--size-1);
+        align-items: center;
+        justify-content: space-between;
+      }
+    }
+
+    & div:first-child {
+      display: flex;
+      align-items: center;
+      gap: var(--size-2);
+
+      //&:first-child {
+      //  flex-shrink: 0;
+      //}
+    }
+
+    &__name {
+      font-size: var(--size-3);
+    }
+
+    &__watched {
+      opacity: 0.4;
+    }
+  }
+}

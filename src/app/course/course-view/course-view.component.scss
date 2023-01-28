@@ -8,6 +8,11 @@
   flex-direction: column;
   gap: var(--size-2);
 
+
+  &__section {
+    margin-bottom: var(--size-3);
+  }
+
   &__name {
     font-size: var(--size-4);
   }
@@ -38,53 +43,10 @@
       gap: var(--size-3);
     }
   }
-
-
-  &__entries {
-    &__entry {
-      display: flex;
-      flex-direction: column;
-      gap: var(--size-4);
-
-      svg {
-        cursor: pointer;
-      }
-
-      padding: var(--size-3);
-      background-color: var(--gray-8);
-      margin-bottom: var(--size-2);
-
-      & div:first-child {
-        display: flex;
-        align-items: center;
-        gap: var(--size-2);
-
-        &:first-child {
-          flex-shrink: 0;
-        }
-      }
-
-
-      & div:nth-child(2) {
-        display: flex;
-        align-items: center;
-        gap: var(--size-1);
-      }
-
-      &__name {
-        font-size: var(--size-3);
-      }
-
-      &__watched {
-        opacity: 0.4;
-      }
-    }
-  }
-
 }
 
 label {
-  font-size: var(--size-4);
+  font-size: var(--size-3);
   display: block;
 }
 
@@ -94,3 +56,7 @@ input[type="text"] {
 }
 
 
+.filters {
+  margin-bottom: var(--size-4);;
+  margin-top: var(--size-4);;
+}

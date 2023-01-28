@@ -6,12 +6,14 @@ import {RouterModule} from "@angular/router";
 import {CourseListResolver} from "./course-list.resolver";
 import {CourseResolver} from "./course.resolver";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import { CourseEntryListComponent } from './course-entry-list/course-entry-list.component';
 
 
 @NgModule({
   declarations: [
     CourseListComponent,
-    CourseViewComponent
+    CourseViewComponent,
+    CourseEntryListComponent
   ],
   imports: [
     CommonModule,
