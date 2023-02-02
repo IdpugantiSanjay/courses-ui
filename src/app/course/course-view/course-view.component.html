@@ -44,7 +44,7 @@
         <span>
         Search:
         </span>
-        <input type="text" [formControl]="search">
+        <input type="text" [formControl]="search" autofocus>
       </label>
     </div>
     <div *ngIf="hasSections; else sectionLess" >
@@ -56,7 +56,7 @@
 
 
       <ng-template #sectionLess>
-        <app-course-entry-list [entries]="course.entries" (toggleWatched)="toggleWatched($event)"></app-course-entry-list>
+        <app-course-entry-list [entries]="filteredCourseEntries" (toggleWatched)="toggleWatched($event)"></app-course-entry-list>
       </ng-template>
   </div>
 </div>

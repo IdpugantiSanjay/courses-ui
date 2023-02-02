@@ -18,7 +18,7 @@ export class CourseResolver implements Resolve<CourseViewRouteData> {
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<CourseViewRouteData> {
     const watchedInfo = this.service.Watched(route.params['id'])
-    const course = this.service.Get(route.params['id'])
+    const course = this.service.Get(+route.params['id'])
 
     return zip(course, watchedInfo).pipe(
       map(([course, watchedInfo]) => {

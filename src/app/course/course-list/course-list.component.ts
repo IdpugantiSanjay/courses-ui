@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
-import {GetCourseView} from "../course";
+import {CourseListPageData} from "../course";
 
 @Component({
   selector: 'app-course-list',
@@ -8,7 +8,7 @@ import {GetCourseView} from "../course";
   styleUrls: ['./course-list.component.scss']
 })
 export class CourseListComponent implements OnInit {
-  courses: GetCourseView[] = []
+  courses!: CourseListPageData
 
   constructor(private readonly route: ActivatedRoute) {
   }
@@ -17,5 +17,9 @@ export class CourseListComponent implements OnInit {
     this.route.data.subscribe(({courses}) => {
       this.courses = courses
     })
+  }
+
+  formatPercentage(progress: number) {
+    return Math.round(progress)
   }
 }

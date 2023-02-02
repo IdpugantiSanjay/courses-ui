@@ -19,6 +19,14 @@ export interface CourseEntry {
   section: string
 }
 
+export type CourseListPageData = {
+  completed: GetCourseView[]
+
+  inProgress: GetCourseView[]
+
+  notStarted: GetCourseView[]
+}
+
 
 export type GetCourseView = {
   id: number;
@@ -28,6 +36,8 @@ export type GetCourseView = {
   isHighDefinition: boolean;
   author?: string;
   platform?: string;
+
+  progress: number
   entries?: CourseEntry[]
 }
 
