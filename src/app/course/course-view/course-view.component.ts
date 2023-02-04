@@ -72,8 +72,4 @@ export class CourseViewComponent implements OnInit {
   sectionEntries(section: string) {
     return this.filteredCourseEntries?.filter(c => c.section === section)
   }
-
-  navigateToEntryNotesView($event: { entryId: number }) {
-    this.router.navigate(['/courses', this.course.id, $event.entryId, 'notes'])
-  }
 }
