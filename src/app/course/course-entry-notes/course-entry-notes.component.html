@@ -1,0 +1,18 @@
+<div class="container">
+
+
+  <form class="notes-container" (submit)="save()">
+
+    <label for="notes">
+      Notes
+    </label>
+    <textarea id="notes" [(ngModel)]="notes" name="notes">
+      </textarea>
+
+
+    <div class="actions">
+      <button type="submit">Save Note</button>
+    </div>
+
+  </form>
+</div>

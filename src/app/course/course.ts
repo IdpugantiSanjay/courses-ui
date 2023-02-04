@@ -17,6 +17,7 @@ export interface CourseEntry {
   isHighDefinition: boolean;
   watched: boolean
   section: string
+  hasNotes: boolean
 }
 
 export type CourseListPageData = {

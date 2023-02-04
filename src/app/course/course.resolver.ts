@@ -19,13 +19,15 @@ export class CourseResolver implements Resolve<CourseViewRouteData> {
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<CourseViewRouteData> {
     const watchedInfo = this.service.Watched(route.params['id'])
     const course = this.service.Get(+route.params['id'])
+    const entryIdListHavingNotes = this.service.GetEntriesWithNotes(+route.params['id']).pipe(map(x => x.entryIdList))
 
-    return zip(course, watchedInfo).pipe(
-      map(([course, watchedInfo]) => {
+    return zip(course, watchedInfo, entryIdListHavingNotes).pipe(
+      map(([course, watchedInfo, entriesWithNotes]) => {
         const watchedEntriesSet = new Set<number>(watchedInfo.watchedEntries?.map(e => e.id) || [])
         for (const entry of course.entries || []) {
           if (watchedEntriesSet.has(entry.id)) {
             entry.watched = true
+            entry.hasNotes = entriesWithNotes.includes(entry.id)
           }
         }
         return {course, watchedInfo}

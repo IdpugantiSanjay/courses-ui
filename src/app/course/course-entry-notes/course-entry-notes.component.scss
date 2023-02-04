@@ -1,0 +1,40 @@
+.container {
+  padding: var(--size-3);
+  height: 100%;
+}
+
+.notes-container {
+  display: flex;
+  gap: var(--size-4);
+  flex-direction: column;
+  height: 100%;
+
+  padding: var(--size-3);
+  background-color: var(--gray-8);
+  box-shadow: var(--shadow-1);
+  border-radius: var(--radius-1);
+}
+
+textarea {
+  background-color: var(--gray-7);
+  resize: vertical;
+  font-size: var(--font-size-2);
+  height: 600px;
+}
+
+
+label{
+  font-size: var(--font-size-2);
+  font-weight: var(--font-weight-6);
+}
+
+.actions {
+  display: flex;
+  justify-content: center;
+
+  button {
+    width: clamp(250px, 50%, 500px);
+  }
+}
+
+

@@ -50,13 +50,13 @@
     <div *ngIf="hasSections; else sectionLess" >
       <details *ngFor="let section of sections" class="course__section">
         <summary class="course__section__name">{{ section }}</summary>
-        <app-course-entry-list class="course__section__entries" [entries]="sectionEntries(section)" (toggleWatched)="toggleWatched($event)"></app-course-entry-list>
+        <app-course-entry-list class="course__section__entries" [entries]="sectionEntries(section)" (notes)="router.navigate(['/courses', this.course.id, $event.entryId, 'notes'])" (toggleWatched)="toggleWatched($event)"></app-course-entry-list>
       </details>
     </div>
 
 
       <ng-template #sectionLess>
-        <app-course-entry-list [entries]="filteredCourseEntries" (toggleWatched)="toggleWatched($event)"></app-course-entry-list>
+        <app-course-entry-list [entries]="filteredCourseEntries" (notes)="router.navigate(['/courses', this.course.id, $event.entryId, 'notes'])" (toggleWatched)="toggleWatched($event)"></app-course-entry-list>
       </ng-template>
   </div>
 </div>

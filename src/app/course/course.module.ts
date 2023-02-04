@@ -7,13 +7,15 @@ import {CourseListResolver} from "./course-list.resolver";
 import {CourseResolver} from "./course.resolver";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { CourseEntryListComponent } from './course-entry-list/course-entry-list.component';
+import { CourseEntryNotesComponent } from './course-entry-notes/course-entry-notes.component';
 
 
 @NgModule({
   declarations: [
     CourseListComponent,
     CourseViewComponent,
-    CourseEntryListComponent
+    CourseEntryListComponent,
+    CourseEntryNotesComponent
   ],
   imports: [
     CommonModule,
@@ -28,6 +30,9 @@ import { CourseEntryListComponent } from './course-entry-list/course-entry-list.
           vm: CourseResolver
         }
       },
+      {
+        path: ':id/:entryId/notes', component: CourseEntryNotesComponent
+      }
     ]),
     FormsModule,
     ReactiveFormsModule

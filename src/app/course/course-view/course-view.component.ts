@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {GetCourseView, GetWatchedResponse} from "../course";
 import {CourseService} from "../course.service";
 import {FormControl} from "@angular/forms";
@@ -15,6 +15,8 @@ export class CourseViewComponent implements OnInit {
   course!: GetCourseView
   watchedInfo: GetWatchedResponse | undefined
   search = new FormControl('')
+
+
 
   get filteredCourseEntries() {
     const search = this.search.value
@@ -36,7 +38,7 @@ export class CourseViewComponent implements OnInit {
     return new Set([...sections.filter(s => this.filteredCourseEntries!.filter(e => e.section == s).length > 0)])
   }
 
-  constructor(private readonly route: ActivatedRoute, private readonly service: CourseService, private readonly titleService: Title) {
+  constructor(private readonly route: ActivatedRoute, private readonly service: CourseService, private readonly titleService: Title, public readonly router: Router) {
   }
 
   get formattedProgress() {
@@ -48,8 +50,8 @@ export class CourseViewComponent implements OnInit {
       const {course, watchedInfo} = vm;
       this.course = course
       this.watchedInfo = watchedInfo
-
       this.titleService.setTitle(this.course!.name)
+
     })
   }
 
@@ -69,5 +71,9 @@ export class CourseViewComponent implements OnInit {
 
   sectionEntries(section: string) {
     return this.filteredCourseEntries?.filter(c => c.section === section)
+  }
+
+  navigateToEntryNotesView($event: { entryId: number }) {
+    this.router.navigate(['/courses', this.course.id, $event.entryId, 'notes'])
   }
 }

@@ -10,6 +10,7 @@ import {GetCourseView} from "../course";
 export class CourseEntryListComponent implements OnInit {
   @Input() entries: GetCourseView['entries'];
   @Output() toggleWatched = new EventEmitter<number>()
+  @Output() notes = new EventEmitter<{ entryId: number }>()
 
   constructor() { }
 
