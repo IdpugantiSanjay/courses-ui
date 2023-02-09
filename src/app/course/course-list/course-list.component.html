@@ -1,7 +1,7 @@
 <div class="container">
 
   <details open>
-    <summary> In Progress</summary>
+    <summary>In Progress</summary>
     <div *ngFor="let course of courses.inProgress">
       <article class="course" [routerLink]="course.id.toString()">
         <div class="course__name">
@@ -38,7 +38,7 @@
 
 
   <details>
-    <summary> Yet to Start</summary>
+    <summary>Yet to Start</summary>
     <div *ngFor="let course of courses.notStarted">
       <article class="course" [routerLink]="course.id.toString()">
         <div class="course__name">
@@ -74,7 +74,7 @@
   </details>
 
   <details>
-    <summary> Completed</summary>
+    <summary>Completed</summary>
     <div *ngFor="let course of courses.completed">
       <article class="course" [routerLink]="course.id.toString()">
         <div class="course__name">
