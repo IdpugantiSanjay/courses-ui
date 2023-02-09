@@ -32,10 +32,10 @@
             Progress
           </span>
         <span>
-            <input type="range" max="100" [value]="watchedInfo?.progress" disabled>
+          <progress max="100" [value]="watchedInfo?.progress">  {{ formattedProgress }}% </progress>
           </span>
         <span>
-          {{ formattedProgress }}%
+          <span>{{ formattedProgress }}%</span>
         </span>
       </div>
     </div>
