@@ -16,8 +16,4 @@ export class CourseEntryListComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
-  sendToggleWatchedEvent(entryId: number) {
-    this.toggleWatched.emit(entryId)
-  }
 }

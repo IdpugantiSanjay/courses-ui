@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
-import {CourseListPageData} from "../course";
+import {CourseListPageData, GetCourseView} from "../course";
 
 @Component({
   selector: 'app-course-list',
@@ -22,4 +22,9 @@ export class CourseListComponent implements OnInit {
   formatPercentage(progress: number) {
     return Math.round(progress)
   }
+
+  tags(course: GetCourseView): string {
+    return course.tags?.join(', ') || ''
+  }
+
 }

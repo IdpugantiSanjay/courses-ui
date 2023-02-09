@@ -40,6 +40,7 @@ export type GetCourseView = {
 
   progress: number
   entries?: CourseEntry[]
+  tags?: string[]
 }
 
 

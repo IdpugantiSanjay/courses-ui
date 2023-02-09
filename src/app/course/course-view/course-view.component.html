@@ -39,6 +39,31 @@
         </span>
       </div>
     </div>
+    <div class="course__tags">
+      <div id="chips" #chips>
+        <div *ngFor="let tag of addedTags" class="chip">
+          <span>{{ tag }}</span>
+          <span (click)="removeTag(tag)" class="chip__container">
+                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd"
+      d="M9.43 2.483L6.9 5.011L4.37 2.481C4.23671 2.34218 4.07704 2.23137 3.90037 2.15506C3.7237 2.07874 3.53357 2.03847 3.34113 2.03658C3.14868 2.0347 2.9578 2.07125 2.77967 2.14409C2.60154 2.21694 2.43974 2.32461 2.30376 2.46079C2.16777 2.59697 2.06034 2.75893 1.98776 2.93717C1.91518 3.11541 1.87891 3.30634 1.88107 3.49878C1.88324 3.69122 1.9238 3.88129 2.00037 4.05785C2.07694 4.23441 2.18799 4.39391 2.327 4.527L4.856 7.057L2.329 9.584C2.06481 9.85697 1.91846 10.2228 1.92152 10.6027C1.92457 10.9825 2.07678 11.346 2.34533 11.6147C2.61388 11.8834 2.97726 12.0357 3.35712 12.039C3.73698 12.0422 4.10291 11.8961 4.376 11.632L6.9 9.1L9.428 11.629C9.5614 11.7675 9.72108 11.8781 9.8977 11.9542C10.0743 12.0304 10.2644 12.0705 10.4567 12.0723C10.649 12.0741 10.8397 12.0376 11.0178 11.9648C11.1958 11.8921 11.3576 11.7846 11.4936 11.6486C11.6296 11.5126 11.7371 11.3508 11.8098 11.1728C11.8826 10.9948 11.9191 10.804 11.9173 10.6117C11.9155 10.4194 11.8753 10.2293 11.7992 10.0527C11.7231 9.87608 11.6125 9.7164 11.474 9.583L8.95 7.058L11.477 4.531C11.7412 4.25804 11.8875 3.89219 11.8845 3.51232C11.8814 3.13245 11.7292 2.769 11.4607 2.50032C11.1921 2.23164 10.8287 2.07926 10.4489 2.07602C10.069 2.07278 9.70309 2.21894 9.43 2.483Z"
+/>
+</svg>
+                  </span>
+        </div>
+      </div>
+      <label>
+          <span class="label-text">
+            Tags:
+          </span>
+        <input list="tags" id="tagsInput" (change)="addTagIfExist()" [(ngModel)]="tag" [placeholder]="tagsPlaceholder"
+               [disabled]="addedTags.length == 3">
+        <datalist id="tags">
+          <option [value]="tag.name" *ngFor="let tag of tags"></option>
+        </datalist>
+      </label>
+
+    </div>
     <div class="filters">
       <label>
         <span>
@@ -47,16 +72,20 @@
         <input type="text" [formControl]="search" autofocus>
       </label>
     </div>
-    <div *ngIf="hasSections; else sectionLess" >
+    <div *ngIf="hasSections; else sectionLess">
       <details *ngFor="let section of sections" class="course__section">
         <summary class="course__section__name">{{ section }}</summary>
-        <app-course-entry-list class="course__section__entries" [entries]="sectionEntries(section)" (notes)="router.navigate(['/courses', this.course.id, $event.entryId, 'notes'])" (toggleWatched)="toggleWatched($event)"></app-course-entry-list>
+        <app-course-entry-list class="course__section__entries" [entries]="sectionEntries(section)"
+                               (notes)="router.navigate(['/courses', this.course.id, $event.entryId, 'notes'])"
+                               (toggleWatched)="toggleWatched($event)"></app-course-entry-list>
       </details>
     </div>
 
 
-      <ng-template #sectionLess>
-        <app-course-entry-list [entries]="filteredCourseEntries" (notes)="router.navigate(['/courses', this.course.id, $event.entryId, 'notes'])" (toggleWatched)="toggleWatched($event)"></app-course-entry-list>
-      </ng-template>
+    <ng-template #sectionLess>
+      <app-course-entry-list [entries]="filteredCourseEntries"
+                             (notes)="router.navigate(['/courses', this.course.id, $event.entryId, 'notes'])"
+                             (toggleWatched)="toggleWatched($event)"></app-course-entry-list>
+    </ng-template>
   </div>
 </div>

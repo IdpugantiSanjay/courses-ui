@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {GetCourseView, GetWatchedResponse} from "../course";
 import {CourseService} from "../course.service";
@@ -16,7 +16,48 @@ export class CourseViewComponent implements OnInit {
   watchedInfo: GetWatchedResponse | undefined
   search = new FormControl('')
 
+  tags = [
+    {id: 1, name: ".NET"},
+    {id: 2, name: "JavaScript"},
+    {id: 3, name: "Web"},
+    {id: 4, name: "CSS"},
+    {id: 5, name: "Database"},
+    {id: 6, name: "AWS"},
+    {id: 7, name: "Security"},
+    {id: 8, name: "Git"},
+    {id: 9, name: "GitHub"},
+    {id: 10, name: "Docker"},
+  ]
 
+  tag: string = ''
+  addedTags: string[] = []
+
+  @ViewChild('chips') chips!: ElementRef<HTMLDivElement>;
+
+
+  addTagIfExist() {
+    if (this.addedTags.length < 3 && [...this.tags.values()].map(t => t.name.toLowerCase()).includes(this.tag.toLowerCase()) && !this.addedTags.includes(this.tag)) {
+      this.addedTags.push(this.tag)
+      this.tag = ''
+      this.updateCourseTags()
+    }
+  }
+
+
+  updateCourseTags() {
+    this.service.UpdateTags(this.course.id, this.addedTags.map(x => this.tags.find(t => t.name === x)!.id)).subscribe()
+  }
+
+
+  removeTag(tagName: string) {
+    this.addedTags.splice(this.addedTags.findIndex(t => t.toLowerCase() == tagName.toLowerCase()), 1)
+    this.updateCourseTags()
+  }
+
+  get tagsPlaceholder() {
+    if (this.addedTags.length == 3) return 'Tags limit reached'
+    return ''
+  }
 
   get filteredCourseEntries() {
     const search = this.search.value
@@ -51,7 +92,7 @@ export class CourseViewComponent implements OnInit {
       this.course = course
       this.watchedInfo = watchedInfo
       this.titleService.setTitle(this.course!.name)
-
+      this.addedTags = this.course.tags || []
     })
   }
 

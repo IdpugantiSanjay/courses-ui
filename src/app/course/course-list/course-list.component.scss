@@ -22,19 +22,28 @@
   &__info {
     display: flex;
     justify-content: space-between;
+    font-size: var(--size-2_point_5);
+    align-items: center;
 
     &__duration {
       display: flex;
       align-items: center;
       gap: var(--size-1);
-      font-size: var(--size-2_point_5);
+
     }
 
     &__progress {
-      font-size: var(--size-2_point_5);
+    }
+
+    &__tags {
+      display: flex;
+      gap: var(--size-2);
     }
   }
+}
 
 
+.tag-icon {
+  fill: var(--gray-0);
 }
 
