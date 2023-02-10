@@ -21,21 +21,21 @@ export class CourseViewComponent implements OnInit {
   get filteredCourseEntries() {
     const search = this.search.value
     if (search) {
-      return this.course?.entries?.filter(c => c.name.toLocaleLowerCase().includes(search.toLocaleLowerCase()))
+      return this.course.entries?.filter(c => c.name.toLocaleLowerCase().includes(search.toLocaleLowerCase())) ?? []
     }
-    return this.course?.entries
+    return this.course?.entries || []
   }
 
   get hasSections(): boolean {
-    if (this.course?.entries?.length) {
-      return !!this.course!.entries[0].section
+    if (this.course.entries?.length) {
+      return !!this.course.entries[0].section
     }
     return false
   }
 
   get sections() {
-    const sections = [...this.course.entries?.map(c => c.section)!]
-    return new Set([...sections.filter(s => this.filteredCourseEntries!.filter(e => e.section == s).length > 0)])
+    const sections = [...(this.course.entries || []).map(c => c.section)]
+    return new Set([...sections.filter(s => this.filteredCourseEntries.filter(e => e.section == s).length > 0)])
   }
 
   constructor(private readonly route: ActivatedRoute, private readonly service: CourseService, private readonly titleService: Title, public readonly router: Router) {
@@ -50,8 +50,7 @@ export class CourseViewComponent implements OnInit {
       const {course, watchedInfo} = vm;
       this.course = course
       this.watchedInfo = watchedInfo
-      this.titleService.setTitle(this.course!.name)
-
+      this.titleService.setTitle(this.course.name)
     })
   }
 
@@ -61,9 +60,9 @@ export class CourseViewComponent implements OnInit {
     if (entry) {
       entry.watched = !entry.watched
       if (entry.watched) {
-        this.service.SetWatched(this.course!.id, entryId).subscribe()
+        this.service.SetWatched(this.course.id, entryId).subscribe()
       } else {
-        this.service.RemoveWatched(this.course!.id, entryId).subscribe()
+        this.service.RemoveWatched(this.course.id, entryId).subscribe()
       }
     }
   }

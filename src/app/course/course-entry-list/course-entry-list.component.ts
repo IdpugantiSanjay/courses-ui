@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@angular/core';
 import {GetCourseView} from "../course";
 
 @Component({
@@ -7,15 +7,10 @@ import {GetCourseView} from "../course";
   styleUrls: ['./course-entry-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CourseEntryListComponent implements OnInit {
+export class CourseEntryListComponent {
   @Input() entries: GetCourseView['entries'];
   @Output() toggleWatched = new EventEmitter<number>()
   @Output() notes = new EventEmitter<{ entryId: number }>()
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
 
   sendToggleWatchedEvent(entryId: number) {
     this.toggleWatched.emit(entryId)

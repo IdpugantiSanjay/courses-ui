@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {
   Resolve,
-  RouterStateSnapshot,
   ActivatedRouteSnapshot
 } from '@angular/router';
 import {map, Observable, zip} from 'rxjs';
@@ -16,7 +15,7 @@ export class CourseResolver implements Resolve<CourseViewRouteData> {
   constructor(private readonly service: CourseService) {
   }
 
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<CourseViewRouteData> {
+  resolve(route: ActivatedRouteSnapshot): Observable<CourseViewRouteData> {
     const watchedInfo = this.service.Watched(route.params['id'])
     const course = this.service.Get(+route.params['id'])
     const entryIdListHavingNotes = this.service.GetEntriesWithNotes(+route.params['id']).pipe(map(x => x.entryIdList))
