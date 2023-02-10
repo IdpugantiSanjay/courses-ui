@@ -1,5 +1,24 @@
-<div class="container">
+<div class="container" *ngIf="course$ | async as course">
 
+  <div class="breadcrumb">
+    <div class="breadcrumb__entry">
+      <span><a routerLink="/courses">
+        <span class="breadcrumb__entry__name">Courses</span>
+      </a></span>
+      <span>  /  </span>
+    </div>
+    <div class="breadcrumb__entry">
+      <span><a routerLink="/courses/{{courseId}}">
+        <span class="breadcrumb__entry__name">{{course.name}}</span>
+      </a></span>
+      <span> / </span>
+    </div>
+    <div class="breadcrumb__entry-active">
+      <span><a routerLink="/courses/{{courseId}}/notes">
+        <span class="breadcrumb__entry__name">Notes</span>
+      </a></span>
+    </div>
+  </div>
 
   <form class="notes-container" (submit)="save()">
 

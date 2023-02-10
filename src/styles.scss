@@ -20,3 +20,28 @@
 .clock-icon {
   fill: var(--gray-4);
 }
+
+
+.breadcrumb {
+  display: flex;
+  gap: var(--size-1);
+
+  &__entry {
+    opacity: 0.6;
+    display: flex;
+    gap: var(--size-1);
+
+    &__name {
+      display: inline-block;
+      max-width: var(--size-fluid-8);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+
+  &__entry-active {
+    opacity: 1;
+    font-weight: var(--font-weight-5);
+  }
+}
