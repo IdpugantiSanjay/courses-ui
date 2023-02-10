@@ -1,9 +1,10 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import {AfterViewInit, ChangeDetectionStrategy, Component, Inject, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {GetCourseView, GetWatchedResponse} from "../course";
 import {CourseService} from "../course.service";
 import {FormControl} from "@angular/forms";
 import {Title} from "@angular/platform-browser";
+import {DOCUMENT} from "@angular/common";
 
 @Component({
   selector: 'app-course-view',
@@ -11,12 +12,11 @@ import {Title} from "@angular/platform-browser";
   styleUrls: ['./course-view.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CourseViewComponent implements OnInit {
+export class CourseViewComponent implements OnInit, AfterViewInit {
+
   course!: GetCourseView
   watchedInfo: GetWatchedResponse | undefined
   search = new FormControl('')
-
-
 
   get filteredCourseEntries() {
     const search = this.search.value
@@ -38,7 +38,7 @@ export class CourseViewComponent implements OnInit {
     return new Set([...sections.filter(s => this.filteredCourseEntries.filter(e => e.section == s).length > 0)])
   }
 
-  constructor(private readonly route: ActivatedRoute, private readonly service: CourseService, private readonly titleService: Title, public readonly router: Router) {
+  constructor(private readonly route: ActivatedRoute, private readonly service: CourseService, private readonly titleService: Title, public readonly router: Router, @Inject(DOCUMENT) private document: Document) {
   }
 
   get formattedProgress() {
@@ -52,6 +52,16 @@ export class CourseViewComponent implements OnInit {
       this.watchedInfo = watchedInfo
       this.titleService.setTitle(this.course.name)
     })
+  }
+
+  ngAfterViewInit(): void {
+    this.#scrollToNextEntryToWatch()
+  }
+
+  #scrollToNextEntryToWatch() {
+    const firstNonWatchedEntrySelector = '.course__entries .course__entries__entry:first-child:not(.course__entries__entry__watched)'
+    const firstNonWatchedEntry = this.document.querySelector(firstNonWatchedEntrySelector)
+    firstNonWatchedEntry?.scrollIntoView({behavior: 'smooth', block: 'start' })
   }
 
 
