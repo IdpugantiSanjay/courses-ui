@@ -1,5 +1,12 @@
 # Courses
 
+![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/IdpugantiSanjay/courses-ui/main.yml) ![GitHub issues](https://img.shields.io/github/issues/IdpugantiSanjay/courses-ui?style=flat-square) ![GitHub pull requests](https://img.shields.io/github/issues-pr/IdpugantiSanjay/courses-ui?style=flat-square)
+
+![GitHub package.json dependency version (prod)](https://img.shields.io/github/package-json/dependency-version/IdpugantiSanjay/courses-ui/@angular/core?style=flat-square)
+![GitHub package.json dependency version (prod)](https://img.shields.io/github/package-json/dependency-version/IdpugantiSanjay/courses-ui/@angular/common?style=flat-square)
+![GitHub package.json dependency version (prod)](https://img.shields.io/github/package-json/dependency-version/IdpugantiSanjay/courses-ui/rxjs?style=flat-square)
+![GitHub package.json dependency version (dev dep on branch)](https://img.shields.io/github/package-json/dependency-version/IdpugantiSanjay/courses-ui/dev/typescript?style=flat-square)
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.2.6. Updated to 15.1.4
 
 ### Frontend Stack
