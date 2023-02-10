@@ -1,6 +1,9 @@
 # Courses
 
-![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/IdpugantiSanjay/courses-ui/main.yml) ![GitHub issues](https://img.shields.io/github/issues/IdpugantiSanjay/courses-ui?style=flat-square) ![GitHub pull requests](https://img.shields.io/github/issues-pr/IdpugantiSanjay/courses-ui?style=flat-square)
+![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/IdpugantiSanjay/courses-ui/main.yml?style=flat-square)
+![GitHub issues](https://img.shields.io/github/issues-raw/IdpugantiSanjay/courses-ui?style=flat-square)
+![GitHub closed issues](https://img.shields.io/github/issues-closed-raw/IdpugantiSanjay/courses-ui?style=flat-square) 
+![GitHub pull requests](https://img.shields.io/github/issues-pr/IdpugantiSanjay/courses-ui?style=flat-square)
 
 ![GitHub package.json dependency version (prod)](https://img.shields.io/github/package-json/dependency-version/IdpugantiSanjay/courses-ui/@angular/core?style=flat-square)
 ![GitHub package.json dependency version (prod)](https://img.shields.io/github/package-json/dependency-version/IdpugantiSanjay/courses-ui/@angular/common?style=flat-square)
