@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import {AfterViewInit, ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {GetCourseView, GetWatchedResponse} from "../course";
 import {CourseService} from "../course.service";
@@ -11,12 +11,21 @@ import {Title} from "@angular/platform-browser";
   styleUrls: ['./course-view.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CourseViewComponent implements OnInit {
+export class CourseViewComponent implements OnInit, AfterViewInit {
+
   course!: GetCourseView
   watchedInfo: GetWatchedResponse | undefined
   search = new FormControl('')
 
+  ngAfterViewInit(): void {
+    this.#scrollToNextEntryToWatch()
+  }
 
+  #scrollToNextEntryToWatch() {
+    const firstNonWatchedEntrySelector = '.course__entries .course__entries__entry:first-child:not(.course__entries__entry__watched)'
+    const firstNonWatchedEntry = document.querySelector(firstNonWatchedEntrySelector)
+    firstNonWatchedEntry?.scrollIntoView({behavior: 'smooth', block: 'start' })
+  }
 
   get filteredCourseEntries() {
     const search = this.search.value

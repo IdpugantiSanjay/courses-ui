@@ -1,7 +1,6 @@
 <div class="course__entries">
-  <div *ngFor="let entry of entries"
-       [ngClass]="{ 'course__entries__entry__watched': entry.watched }">
-    <div class="course__entries__entry">
+  <div *ngFor="let entry of entries">
+    <div class="course__entries__entry" [ngClass]="{ 'course__entries__entry__watched': entry.watched }">
       <div>
         <div class="course__entries__entry__name">
           {{ entry.name }}
@@ -55,10 +54,7 @@
               {{ entry.duration }}
             </span>
           </span>
-
-
         </div>
-
       </div>
     </div>
   </div>
