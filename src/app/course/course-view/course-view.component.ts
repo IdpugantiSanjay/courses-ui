@@ -1,9 +1,10 @@
-import {AfterViewInit, ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import {AfterViewInit, ChangeDetectionStrategy, Component, Inject, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {GetCourseView, GetWatchedResponse} from "../course";
 import {CourseService} from "../course.service";
 import {FormControl} from "@angular/forms";
 import {Title} from "@angular/platform-browser";
+import {DOCUMENT} from "@angular/common";
 
 @Component({
   selector: 'app-course-view',
@@ -16,16 +17,6 @@ export class CourseViewComponent implements OnInit, AfterViewInit {
   course!: GetCourseView
   watchedInfo: GetWatchedResponse | undefined
   search = new FormControl('')
-
-  ngAfterViewInit(): void {
-    this.#scrollToNextEntryToWatch()
-  }
-
-  #scrollToNextEntryToWatch() {
-    const firstNonWatchedEntrySelector = '.course__entries .course__entries__entry:first-child:not(.course__entries__entry__watched)'
-    const firstNonWatchedEntry = document.querySelector(firstNonWatchedEntrySelector)
-    firstNonWatchedEntry?.scrollIntoView({behavior: 'smooth', block: 'start' })
-  }
 
   get filteredCourseEntries() {
     const search = this.search.value
@@ -47,7 +38,7 @@ export class CourseViewComponent implements OnInit, AfterViewInit {
     return new Set([...sections.filter(s => this.filteredCourseEntries.filter(e => e.section == s).length > 0)])
   }
 
-  constructor(private readonly route: ActivatedRoute, private readonly service: CourseService, private readonly titleService: Title, public readonly router: Router) {
+  constructor(private readonly route: ActivatedRoute, private readonly service: CourseService, private readonly titleService: Title, public readonly router: Router, @Inject(DOCUMENT) private document: Document) {
   }
 
   get formattedProgress() {
@@ -61,6 +52,16 @@ export class CourseViewComponent implements OnInit, AfterViewInit {
       this.watchedInfo = watchedInfo
       this.titleService.setTitle(this.course.name)
     })
+  }
+
+  ngAfterViewInit(): void {
+    this.#scrollToNextEntryToWatch()
+  }
+
+  #scrollToNextEntryToWatch() {
+    const firstNonWatchedEntrySelector = '.course__entries .course__entries__entry:first-child:not(.course__entries__entry__watched)'
+    const firstNonWatchedEntry = this.document.querySelector(firstNonWatchedEntrySelector)
+    firstNonWatchedEntry?.scrollIntoView({behavior: 'smooth', block: 'start' })
   }
 
 
