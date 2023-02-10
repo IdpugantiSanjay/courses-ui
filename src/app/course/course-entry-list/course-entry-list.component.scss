@@ -19,7 +19,10 @@
       align-items: baseline;
       font-size: var(--size-2_point_5);
       gap: var(--size-1);
-      justify-content: space-between;
+
+      &__watched {
+        flex: 1;
+      }
 
       &__info {
         display: flex;
