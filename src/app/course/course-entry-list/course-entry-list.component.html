@@ -8,11 +8,9 @@
       </div>
 
       <div class="course__entries__entry__second_row">
-            <span>
-              <div (click)="toggleWatched.emit(entry.id)">
-                <input type="checkbox" [(ngModel)]="entry.watched">
-            </div>
-            </span>
+        <div (click)="toggleWatched.emit(entry.id)" class="course__entries__entry__second_row__watched">
+            <input type="checkbox" [(ngModel)]="entry.watched">
+        </div>
 
         <div class="course__entries__entry__second_row__info">
           <span (click)="notes.emit({ entryId: entry.id })">
