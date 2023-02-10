@@ -21,17 +21,25 @@
 
   &__info {
     display: flex;
-    justify-content: space-between;
+    gap: var(--size-2);
 
     &__duration {
       display: flex;
       align-items: center;
       gap: var(--size-1);
       font-size: var(--size-2_point_5);
+      flex: 1;
     }
 
     &__progress {
       font-size: var(--size-2_point_5);
+      flex-basis: 25px;
+      text-align: end;
+    }
+
+
+    &__hd {
+      flex-basis: 25px;
     }
   }
 
