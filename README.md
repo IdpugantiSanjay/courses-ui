@@ -1,6 +1,7 @@
 # Courses
 
 ![Docker Image Version (latest semver)](https://img.shields.io/docker/v/isanjay112/courses-ui?color=blue&sort=semver&style=flat-square)
+![GitHub last commit (branch)](https://img.shields.io/github/last-commit/IdpugantiSanjay/courses-ui/master?color=blue&label=last%20commit%20to%20master&style=flat-square)
 ![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/IdpugantiSanjay/courses-ui/main.yml?style=flat-square)
 ![GitHub issues](https://img.shields.io/github/issues-raw/IdpugantiSanjay/courses-ui?style=flat-square)
 ![GitHub closed issues](https://img.shields.io/github/issues-closed-raw/IdpugantiSanjay/courses-ui?style=flat-square) 
