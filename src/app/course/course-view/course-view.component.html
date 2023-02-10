@@ -1,4 +1,20 @@
+
+
 <div class="container" *ngIf="course">
+  <div class="breadcrumb">
+    <div class="breadcrumb__entry">
+      <span><a routerLink="/courses">
+        <span class="breadcrumb__entry__name">Courses</span>
+      </a></span>
+      <span>  /  </span>
+    </div>
+    <div class="breadcrumb__entry breadcrumb__entry-active">
+      <span><a routerLink="/courses/{{course.id}}">
+        <span class="breadcrumb__entry__name">{{course.name}}</span>
+      </a></span>
+    </div>
+  </div>
+
   <div class="course">
     <div class="course__name">
       {{ course.name }}
