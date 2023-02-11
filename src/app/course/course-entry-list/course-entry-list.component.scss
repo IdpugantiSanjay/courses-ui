@@ -27,9 +27,9 @@
       &__info {
         display: grid;
         grid-auto-flow: column;
-        grid-template-columns: 30px 50px;
+        grid-template-columns: 20px 20px 50px;
         align-items: center;
-        gap: var(--size-6);
+        gap: var(--size-4);
 
         &__duration {
           display: grid;
@@ -44,10 +44,6 @@
       display: flex;
       align-items: center;
       gap: var(--size-2);
-
-      //&:first-child {
-      //  flex-shrink: 0;
-      //}
     }
 
     &__name {
@@ -61,13 +57,19 @@
 }
 
 
-.notes-icon {
+.bookmark-icon {
+  fill: var(--gray-4);
+
+  &.bookmarked {
+    fill: var(--yellow-4);
+  }
+}
+
+.notes-icon  {
   fill: var(--gray-4);
 }
 
 
 .notes-icon.hasNotes {
   fill: var(--green-4);
-  opacity: 1;
-  z-index: 1;
 }
