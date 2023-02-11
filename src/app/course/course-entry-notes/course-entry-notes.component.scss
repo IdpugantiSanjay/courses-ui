@@ -36,6 +36,10 @@ label{
 
   button {
     width: clamp(250px, 50%, 500px);
+    &[value="Saved"] {
+      transition: color 100ms linear;
+      color: var(--green-5);
+    }
   }
 }
 
