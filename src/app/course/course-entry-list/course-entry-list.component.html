@@ -3,7 +3,10 @@
     <div class="course__entries__entry" [ngClass]="{ 'course__entries__entry__watched': entry.watched }">
       <div>
         <div class="course__entries__entry__name">
-          {{ entry.name }}
+          <a *ngIf="!!entry.videoId; else normal" href="https://www.youtube.com/watch?v={{entry.videoId}}" target="_blank">{{ entry.name }}</a>
+          <ng-template #normal>
+            {{ entry.name }}
+          </ng-template>
         </div>
       </div>
 

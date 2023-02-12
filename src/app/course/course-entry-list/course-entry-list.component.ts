@@ -11,8 +11,4 @@ export class CourseEntryListComponent {
   @Input() entries: GetCourseView['entries'];
   @Output() toggleWatched = new EventEmitter<number>()
   @Output() notes = new EventEmitter<{ entryId: number }>()
-
-  sendToggleWatchedEvent(entryId: number) {
-    this.toggleWatched.emit(entryId)
-  }
 }

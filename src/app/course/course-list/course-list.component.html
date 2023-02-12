@@ -5,7 +5,10 @@
     <div *ngFor="let course of courses.inProgress">
       <article class="course" [routerLink]="course.id.toString()">
         <div class="course__name">
-          {{ course.name }}
+          <a *ngIf="!!course.playlistId; else normal" href="https://www.youtube.com/playlist?list={{course.playlistId}}" target="_blank">{{ course.name }}</a>
+          <ng-template #normal>
+            {{ course.name }}
+          </ng-template>
         </div>
         <div class="course__info">
           <div class="course__info__duration">
@@ -60,7 +63,10 @@
     <div *ngFor="let course of courses.notStarted">
       <article class="course" [routerLink]="course.id.toString()">
         <div class="course__name">
-          {{ course.name }}
+          <a *ngIf="!!course.playlistId; else normal" href="https://www.youtube.com/playlist?list={{course.playlistId}}" target="_blank">{{ course.name }}</a>
+          <ng-template #normal>
+            {{ course.name }}
+          </ng-template>
         </div>
         <div class="course__info">
           <div class="course__info__duration">
@@ -114,7 +120,10 @@
     <div *ngFor="let course of courses.completed">
       <article class="course" [routerLink]="course.id.toString()">
         <div class="course__name">
-          {{ course.name }}
+          <a *ngIf="!!course.playlistId; else normal" href="https://www.youtube.com/playlist?list={{course.playlistId}}" target="_blank">{{ course.name }}</a>
+          <ng-template #normal>
+            {{ course.name }}
+          </ng-template>
         </div>
         <div class="course__info">
           <div class="course__info__duration">
