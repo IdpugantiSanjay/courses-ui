@@ -10,6 +10,7 @@
     }
 
     padding: var(--size-3);
+    padding-right: var(--size-6);
     background-color: var(--gray-7);
     margin-bottom: var(--size-2);
 
@@ -31,11 +32,17 @@
         align-items: center;
         gap: var(--size-6);
 
+
         &__duration {
-          display: grid;
-          grid-auto-flow: column;
-          gap: var(--size-1);
+          display: flex;
+          gap: var(--size-2);
+
           align-items: center;
+          font-size: var(--size-3);
+
+          & > * {
+            flex-shrink: 0;
+          }
         }
       }
     }

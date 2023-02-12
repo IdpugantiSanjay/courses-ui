@@ -18,6 +18,7 @@ export interface CourseEntry {
   watched: boolean
   section: string
   hasNotes: boolean
+  videoId?: string
 }
 
 export type CourseListPageData = {
@@ -39,6 +40,7 @@ export type GetCourseView = {
   platform?: string;
 
   progress: number
+  playlistId?: string
   entries?: CourseEntry[]
 }
 
