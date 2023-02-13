@@ -59,5 +59,13 @@ input[type="text"] {
 
 .filters {
   margin-bottom: var(--size-4);;
-  margin-top: var(--size-4);;
+  margin-top: var(--size-4);
+
+  display: flex;
+  gap: var(--size-6);
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
 }
+
+

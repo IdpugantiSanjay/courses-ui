@@ -1,4 +1,4 @@
-import {AfterViewInit, ChangeDetectionStrategy, Component, Inject, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Inject, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {GetCourseView, GetWatchedResponse} from "../course";
 import {CourseService} from "../course.service";
@@ -12,18 +12,27 @@ import {DOCUMENT} from "@angular/common";
   styleUrls: ['./course-view.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CourseViewComponent implements OnInit, AfterViewInit {
+export class CourseViewComponent implements OnInit {
 
   course!: GetCourseView
   watchedInfo: GetWatchedResponse | undefined
   search = new FormControl('')
 
+  hideCompleted = false
+
   get filteredCourseEntries() {
     const search = this.search.value
+    let entries = this.course?.entries ?? []
+
     if (search) {
-      return this.course.entries?.filter(c => c.name.toLocaleLowerCase().includes(search.toLocaleLowerCase())) ?? []
+      entries = entries.filter(c => c.name.toLocaleLowerCase().includes(search.toLocaleLowerCase())) ?? []
     }
-    return this.course?.entries || []
+
+    if (this.hideCompleted) {
+      entries = entries.filter(e => !e.watched)
+    }
+
+    return entries
   }
 
   get hasSections(): boolean {
@@ -54,15 +63,12 @@ export class CourseViewComponent implements OnInit, AfterViewInit {
     })
   }
 
-  ngAfterViewInit(): void {
-    this.#scrollToNextEntryToWatch()
-  }
 
-  #scrollToNextEntryToWatch() {
-    const firstNonWatchedEntrySelector = '.course__entries .course__entries__entry:first-child:not(.course__entries__entry__watched)'
-    const firstNonWatchedEntry = this.document.querySelector(firstNonWatchedEntrySelector)
-    firstNonWatchedEntry?.scrollIntoView({behavior: 'smooth', block: 'start' })
-  }
+  // #scrollToNextEntryToWatch() {
+  //   const firstNonWatchedEntrySelector = '.course__entries .course__entries__entry:first-child:not(.course__entries__entry__watched)'
+  //   const firstNonWatchedEntry = this.document.querySelector(firstNonWatchedEntrySelector)
+  //   firstNonWatchedEntry?.scrollIntoView({behavior: 'smooth', block: 'start' })
+  // }
 
 
   toggleWatched(entryId: number) {
@@ -80,5 +86,19 @@ export class CourseViewComponent implements OnInit, AfterViewInit {
 
   sectionEntries(section: string) {
     return this.filteredCourseEntries?.filter(c => c.section === section)
+  }
+
+  toggleCompletedStrategy() {
+    if (this.hideCompleted) this.hideCompleted = false
+    else if (!this.hideCompleted) this.hideCompleted = true
+  }
+
+  disableClearFiltersButton(): boolean {
+    return this.course.entries?.length === this.filteredCourseEntries.length
+  }
+
+  clearFilters() {
+    this.search.setValue('')
+    this.hideCompleted = false
   }
 }
