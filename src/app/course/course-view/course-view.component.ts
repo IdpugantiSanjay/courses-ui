@@ -18,12 +18,21 @@ export class CourseViewComponent implements OnInit, AfterViewInit {
   watchedInfo: GetWatchedResponse | undefined
   search = new FormControl('')
 
+  hideCompleted = false
+
   get filteredCourseEntries() {
     const search = this.search.value
+    let entries = this.course?.entries ?? []
+
     if (search) {
-      return this.course.entries?.filter(c => c.name.toLocaleLowerCase().includes(search.toLocaleLowerCase())) ?? []
+      entries = entries.filter(c => c.name.toLocaleLowerCase().includes(search.toLocaleLowerCase())) ?? []
     }
-    return this.course?.entries || []
+
+    if (this.hideCompleted) {
+      entries = entries.filter(e => !e.watched)
+    }
+
+    return entries
   }
 
   get hasSections(): boolean {
@@ -80,5 +89,19 @@ export class CourseViewComponent implements OnInit, AfterViewInit {
 
   sectionEntries(section: string) {
     return this.filteredCourseEntries?.filter(c => c.section === section)
+  }
+
+  toggleCompletedStrategy() {
+    if (this.hideCompleted) this.hideCompleted = false
+    else if (!this.hideCompleted) this.hideCompleted = true
+  }
+
+  disableClearFiltersButton(): boolean {
+    return this.course.entries?.length === this.filteredCourseEntries.length
+  }
+
+  clearFilters() {
+    this.search.setValue('')
+    this.hideCompleted = false
   }
 }
