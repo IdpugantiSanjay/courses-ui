@@ -1,4 +1,4 @@
-import {AfterViewInit, ChangeDetectionStrategy, Component, Inject, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Inject, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {GetCourseView, GetWatchedResponse} from "../course";
 import {CourseService} from "../course.service";
@@ -12,7 +12,7 @@ import {DOCUMENT} from "@angular/common";
   styleUrls: ['./course-view.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CourseViewComponent implements OnInit, AfterViewInit {
+export class CourseViewComponent implements OnInit {
 
   course!: GetCourseView
   watchedInfo: GetWatchedResponse | undefined
@@ -63,15 +63,12 @@ export class CourseViewComponent implements OnInit, AfterViewInit {
     })
   }
 
-  ngAfterViewInit(): void {
-    this.#scrollToNextEntryToWatch()
-  }
 
-  #scrollToNextEntryToWatch() {
-    const firstNonWatchedEntrySelector = '.course__entries .course__entries__entry:first-child:not(.course__entries__entry__watched)'
-    const firstNonWatchedEntry = this.document.querySelector(firstNonWatchedEntrySelector)
-    firstNonWatchedEntry?.scrollIntoView({behavior: 'smooth', block: 'start' })
-  }
+  // #scrollToNextEntryToWatch() {
+  //   const firstNonWatchedEntrySelector = '.course__entries .course__entries__entry:first-child:not(.course__entries__entry__watched)'
+  //   const firstNonWatchedEntry = this.document.querySelector(firstNonWatchedEntrySelector)
+  //   firstNonWatchedEntry?.scrollIntoView({behavior: 'smooth', block: 'start' })
+  // }
 
 
   toggleWatched(entryId: number) {
