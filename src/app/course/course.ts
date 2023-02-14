@@ -49,12 +49,13 @@ export type GetWatchedResponse = {
   watchedCount: number,
   watchedDuration: string,
   progress: number,
-  watchedEntries: Array<{ id: number }>
+  watchedEntries: Array<{ id: number }>,
+  durationLeft: string
 }
 
 
 export type CourseViewRouteData = {
-  course: GetCourseView
+  course: GetCourseView & { durationLeft: string }
 
   watchedInfo: GetWatchedResponse
 }

@@ -29,7 +29,8 @@ export class CourseResolver implements Resolve<CourseViewRouteData> {
             entry.hasNotes = entriesWithNotes.includes(entry.id)
           }
         }
-        return {course, watchedInfo}
+        const courseWithDurationLeft: CourseViewRouteData['course'] = { ...course, durationLeft: watchedInfo.durationLeft }
+        return {course: courseWithDurationLeft, watchedInfo}
       })
     )
   }
