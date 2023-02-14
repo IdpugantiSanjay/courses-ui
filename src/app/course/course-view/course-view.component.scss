@@ -29,6 +29,7 @@
     &__duration {
       display: flex;
       align-items: center;
+      flex-wrap: wrap;
 
       gap: var(--size-1);
     }
@@ -38,17 +39,16 @@
       gap: var(--size-4);
     }
 
+    &__duration-left {
+      display: flex;
+      align-items: center;
+      gap: var(--size-1);
+    }
+
     &__progress {
       display: flex;
       align-items: center;
       gap: var(--size-3);
-
-      &__duration {
-        display: flex;
-        align-items: center;
-        gap: var(--size-1);
-      }
-
     }
   }
 }
