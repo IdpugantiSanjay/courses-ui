@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, Component, Inject, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
-import {GetCourseView, GetWatchedResponse} from "../course";
+import {CourseViewRouteData, GetWatchedResponse} from "../course";
 import {CourseService} from "../course.service";
 import {FormControl} from "@angular/forms";
 import {Title} from "@angular/platform-browser";
@@ -13,8 +13,7 @@ import {DOCUMENT} from "@angular/common";
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CourseViewComponent implements OnInit {
-
-  course!: GetCourseView
+  course!: CourseViewRouteData['course']
   watchedInfo: GetWatchedResponse | undefined
   search = new FormControl('')
 
