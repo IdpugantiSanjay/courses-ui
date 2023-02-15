@@ -36,8 +36,8 @@
 
         </div>
         <span class="course__meta__duration__text">
-          <time> {{ course.durationLeft }} </time>
-          <span> left of </span>
+          <time *ngIf="course.durationLeft"> {{ course.durationLeft }} </time>
+          <span *ngIf="course.durationLeft"> left of </span>
           <time> {{ course.duration }} </time>
           </span>
       </div>
