@@ -32,6 +32,20 @@
       flex-wrap: wrap;
 
       gap: var(--size-1);
+
+      &__text {
+        :first-child {
+          font-weight: var(--font-weight-5);
+        }
+
+        :nth-child(2) {
+          font-weight: var(--font-weight-2);
+        }
+
+        :last-child {
+          font-weight: var(--font-weight-5);
+        }
+      }
     }
 
     &__watchInfo {
