@@ -1,12 +1,11 @@
 FROM node:18 AS build
-WORKDIR /src/courses-ui
-
-COPY package.json package-lock.json ./
-
-RUN npm install
-
+WORKDIR /app
 COPY . .
+RUN npm install
+RUN npm run build --prod
 
-EXPOSE 4200
+FROM nginx:latest
+COPY --from=build /app/dist/courses /usr/share/nginx/html
+COPY /nginx.conf  /etc/nginx/conf.d/default.conf
+EXPOSE 80
 
-CMD ./node_modules/.bin/ng serve --host 0.0.0.0 --configuration=production --proxy-config src/staging-proxy.conf.json
