@@ -1,13 +1,13 @@
-export interface Course {
-  id: number;
-  name: string;
-  duration: string;
-  categories?: string[];
-  isHighDefinition: boolean;
-  path: string;
-  host: string;
-  entries: CourseEntry[];
-}
+// export interface Course {
+//   id: number;
+//   name: string;
+//   duration: string;
+//   categories?: string[];
+//   isHighDefinition: boolean;
+//   path: string;
+//   host: string;
+//   entries: CourseEntry[];
+// }
 
 
 export interface CourseEntry {
@@ -22,22 +22,20 @@ export interface CourseEntry {
 }
 
 export type CourseListPageData = {
-  completed: GetCourseView[]
-
-  inProgress: GetCourseView[]
-
-  notStarted: GetCourseView[]
+  completed: Course[]
+  inProgress: Course[]
+  notStarted: Course[]
 }
 
 
-export type GetCourseView = {
+export type Course = {
   id: number;
   name: string;
   readableDuration: string;
   categories?: string[];
   isHighDefinition: boolean;
-  author?: string;
-  platform?: string;
+  // author?: string;
+  // platform?: string;
   playlistId?: string
   entries?: CourseEntry[]
 }
@@ -52,6 +50,6 @@ export type CourseWatchInfo = {
 
 
 export type CourseViewRouteData = {
-  course: GetCourseView // & { durationLeft: string }
+  course: Course // & { durationLeft: string }
   courseWatchInfo: CourseWatchInfo
 }

@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {CourseService} from "../course.service";
 import {ActivatedRoute} from "@angular/router";
-import {GetCourseView} from "../course";
+import {Course} from "../course";
 import {delay, exhaustMap, Observable, Subject, tap} from "rxjs";
 
 
@@ -20,7 +20,7 @@ export class CourseEntryNotesComponent implements OnInit {
     return +this.route.snapshot.params['id']
   }
 
-  course$!: Observable<GetCourseView>
+  course$!: Observable<Course>
   notes = DEFAULT_NOTE_TEMPLATE
 
   buttonName: 'Save' | 'Saving...' | 'Saved' = 'Save'

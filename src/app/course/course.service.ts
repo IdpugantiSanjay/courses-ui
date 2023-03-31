@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from "@angular/common/http";
-import {GetCourseView, CourseWatchInfo} from "./course";
+import {Course, CourseWatchInfo} from "./course";
 import {map, of, tap} from "rxjs";
 
 @Injectable({
@@ -14,20 +14,12 @@ export class CourseService {
   }
 
   List() {
-    return this.http.get<{ items: GetCourseView[] }>(this.prefix)
+    return this.http.get<{ items: Course[] }>(this.prefix)
   }
 
   Get(id: number) {
-    // const cachedCourse = localStorage.getItem(`course-${id}`)
-    // if (cachedCourse) return of(JSON.parse(cachedCourse) as GetCourseView)
     const params = new HttpParams().set("view", "entries")
-    return this.http.get<GetCourseView>(`${this.prefix}/${id}`, {params})
-
-    // .pipe(
-    //   tap(response => {
-    //     localStorage.setItem(`course-${id}`, JSON.stringify(response))
-    //   })
-    // )
+    return this.http.get<Course>(`${this.prefix}/${id}`, {params})
   }
 
   // SaveNote(request: { courseId: number, entryId: number, note: string }) {

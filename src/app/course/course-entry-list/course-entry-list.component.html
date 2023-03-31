@@ -11,8 +11,8 @@
       </div>
 
       <div class="course__entries__entry__second_row">
-        <div (click)="toggleWatched.emit(entry.id)" class="course__entries__entry__second_row__watched">
-            <input type="checkbox" [(ngModel)]="entry.watched">
+        <div  class="course__entries__entry__second_row__watched">
+            <input type="checkbox" #inputElement [(ngModel)]="entry.watched" (click)="toggleWatched.emit({ entryId: entry.id, watched: inputElement.checked  })">
         </div>
 
         <div class="course__entries__entry__second_row__info">

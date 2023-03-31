@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@angular/core';
-import {GetCourseView} from "../course";
+import {Course} from "../course";
 
 @Component({
   selector: 'app-course-entry-list',
@@ -8,7 +8,7 @@ import {GetCourseView} from "../course";
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CourseEntryListComponent {
-  @Input() entries: GetCourseView['entries'];
-  @Output() toggleWatched = new EventEmitter<number>()
+  @Input() entries!: Course['entries'];
+  @Output() toggleWatched = new EventEmitter<{ entryId: number, watched: boolean }>()
   @Output() notes = new EventEmitter<{ entryId: number }>()
 }

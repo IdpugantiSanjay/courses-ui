@@ -26,9 +26,7 @@ import { CourseEntryNotesComponent } from './course-entry-notes/course-entry-not
         }, pathMatch: 'prefix', title: 'Courses List'
       },
       {
-        path: ':id', component: CourseViewComponent, resolve: {
-          vm: CourseResolver
-        }
+        path: ':id', component: CourseViewComponent
       },
       {
         path: ':id/:entryId/notes', component: CourseEntryNotesComponent
