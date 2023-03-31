@@ -31,20 +31,20 @@ export class CourseEntryNotesComponent implements OnInit {
   ngOnInit(): void {
     const courseId = +this.route.snapshot.params['id']
     this.course$ = this.service.Get(courseId)
-    this.service.GetNote({
-      courseId: courseId,
-      entryId: +this.route.snapshot.params['entryId']
-    }).subscribe(x => this.notes = x)
+    // this.service.GetNote({
+    //   courseId: courseId,
+    //   entryId: +this.route.snapshot.params['entryId']
+    // }).subscribe(x => this.notes = x)
 
     const HALF_SECOND = 500
-    this.save$
-      .pipe(
-        tap(() => this.buttonName = 'Saving...'),
-        exhaustMap(payload => this.service.SaveNote(payload).pipe(delay(HALF_SECOND))),
-        tap(() => this.buttonName = 'Saved'),
-        delay(HALF_SECOND),
-        tap(() => this.buttonName = 'Save'),
-      ).subscribe()
+    // this.save$
+    //   .pipe(
+    //     tap(() => this.buttonName = 'Saving...'),
+    //     exhaustMap(payload => this.service.SaveNote(payload).pipe(delay(HALF_SECOND))),
+    //     tap(() => this.buttonName = 'Saved'),
+    //     delay(HALF_SECOND),
+    //     tap(() => this.buttonName = 'Save'),
+    //   ).subscribe()
   }
 
   save() {

@@ -1,10 +1,11 @@
 import {ChangeDetectionStrategy, Component, Inject, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
-import {CourseViewRouteData, GetWatchedResponse} from "../course";
+import {CourseViewRouteData, CourseWatchInfo} from "../course";
 import {CourseService} from "../course.service";
 import {FormControl} from "@angular/forms";
 import {Title} from "@angular/platform-browser";
 import {DOCUMENT} from "@angular/common";
+import {WatchService} from "../watch.service";
 
 @Component({
   selector: 'app-course-view',
@@ -14,9 +15,8 @@ import {DOCUMENT} from "@angular/common";
 })
 export class CourseViewComponent implements OnInit {
   course!: CourseViewRouteData['course']
-  watchedInfo: GetWatchedResponse | undefined
+  courseWatchInfo!: CourseViewRouteData['courseWatchInfo'] | undefined
   search = new FormControl('')
-
   hideCompleted = false
 
   get filteredCourseEntries() {
@@ -46,18 +46,18 @@ export class CourseViewComponent implements OnInit {
     return new Set([...sections.filter(s => this.filteredCourseEntries.filter(e => e.section == s).length > 0)])
   }
 
-  constructor(private readonly route: ActivatedRoute, private readonly service: CourseService, private readonly titleService: Title, public readonly router: Router, @Inject(DOCUMENT) private document: Document) {
+  constructor(private readonly route: ActivatedRoute, private readonly courseService: CourseService, private readonly watchService: WatchService, private readonly titleService: Title, public readonly router: Router, @Inject(DOCUMENT) private document: Document) {
   }
 
   get formattedProgress() {
-    return Math.round(this.watchedInfo?.progress || 0)
+    return Math.round(this.courseWatchInfo?.progress || 0)
   }
 
   ngOnInit(): void {
     this.route.data.subscribe(({vm}) => {
-      const {course, watchedInfo} = vm;
+      const {course, courseWatchInfo} = vm;
       this.course = course
-      this.watchedInfo = watchedInfo
+      this.courseWatchInfo = courseWatchInfo
       this.titleService.setTitle(this.course.name)
     })
   }
@@ -75,9 +75,9 @@ export class CourseViewComponent implements OnInit {
     if (entry) {
       entry.watched = !entry.watched
       if (entry.watched) {
-        this.service.SetWatched(this.course.id, entryId).subscribe()
+        this.watchService.Create(this.course.id, entryId).subscribe()
       } else {
-        this.service.RemoveWatched(this.course.id, entryId).subscribe()
+        this.watchService.Delete(entryId).subscribe()
       }
     }
   }

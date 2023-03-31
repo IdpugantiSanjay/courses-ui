@@ -26,8 +26,7 @@
         </defs>
       </svg>
       </span>
-            <span> {{ course.duration }} </span>
-
+            <span> {{ course.readableDuration }} </span>
           </div>
 
           <div class="course__info__hd" *ngIf="course.isHighDefinition">
@@ -48,9 +47,9 @@
             </span>
           </div>
 
-          <div class="course__info__progress">
-            {{ formatPercentage(course.progress) }}%
-          </div>
+<!--          <div class="course__info__progress">-->
+<!--            {{ formatPercentage(course.progress) }}%-->
+<!--          </div>-->
         </div>
 
       </article>
@@ -60,6 +59,12 @@
 
   <details>
     <summary>Yet to Start</summary>
+<!--    <div>-->
+<!--      <label for="sortBy">Select</label>-->
+<!--      <select id="sortBy">-->
+<!--        <option>Duration ↓</option>-->
+<!--      </select>-->
+<!--    </div>-->
     <div *ngFor="let course of courses.notStarted">
       <article class="course" [routerLink]="course.id.toString()">
         <div class="course__name">
@@ -84,7 +89,7 @@
         </defs>
       </svg>
       </span>
-            <span> {{ course.duration }} </span>
+            <span> {{ course.readableDuration }} </span>
 
           </div>
 
@@ -106,9 +111,9 @@
             </span>
           </div>
 
-          <div class="course__info__progress">
-            {{ formatPercentage(course.progress) }}%
-          </div>
+<!--          <div class="course__info__progress">-->
+<!--            {{ formatPercentage(course.progress) }}%-->
+<!--          </div>-->
         </div>
 
       </article>
@@ -141,7 +146,7 @@
         </defs>
       </svg>
       </span>
-            <span> {{ course.duration }} </span>
+            <span> {{ course.readableDuration }} </span>
 
           </div>
 
@@ -167,9 +172,9 @@
           <div class="course__info__progress">
 
 
-            <span>
-            {{ formatPercentage(course.progress) }}%
-            </span>
+<!--            <span>-->
+<!--            {{ formatPercentage(course.progress) }}%-->
+<!--            </span>-->
           </div>
         </div>
 

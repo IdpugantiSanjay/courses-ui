@@ -1,37 +1,32 @@
 import {Injectable} from '@angular/core';
-import {
-  Resolve,
-  ActivatedRouteSnapshot
-} from '@angular/router';
+import {ActivatedRouteSnapshot, Resolve} from '@angular/router';
 import {map, Observable, zip} from 'rxjs';
 import {CourseViewRouteData} from "./course";
 import {CourseService} from "./course.service";
+import {WatchService} from "./watch.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class CourseResolver implements Resolve<CourseViewRouteData> {
 
-  constructor(private readonly service: CourseService) {
+  constructor(private readonly courseService: CourseService, private readonly watchService: WatchService) {
   }
 
-  resolve(route: ActivatedRouteSnapshot): Observable<CourseViewRouteData> {
-    const watchedInfo = this.service.Watched(route.params['id'])
-    const course = this.service.Get(+route.params['id'])
-    const entryIdListHavingNotes = this.service.GetEntriesWithNotes(+route.params['id']).pipe(map(x => x.entryIdList))
-
-    return zip(course, watchedInfo, entryIdListHavingNotes).pipe(
-      map(([course, watchedInfo, entriesWithNotes]) => {
-        const watchedEntriesSet = new Set<number>(watchedInfo.watchedEntries?.map(e => e.id) || [])
+  resolve(route: ActivatedRouteSnapshot): Observable<any> {
+    const courseWatchStats = this.watchService.Get(route.params['id'])
+    const course = this.courseService.Get(+route.params['id'])
+    return zip(course, courseWatchStats).pipe(
+      map(([course, courseWatchStats]) => {
+        const watchedEntriesSet = new Set<number>(courseWatchStats.watchedIdList || [])
         for (const entry of course.entries || []) {
           if (watchedEntriesSet.has(entry.id)) {
             entry.watched = true
-            entry.hasNotes = entriesWithNotes.includes(entry.id)
           }
         }
-        const courseWithDurationLeft: CourseViewRouteData['course'] = { ...course, durationLeft: watchedInfo.durationLeft }
-        return {course: courseWithDurationLeft, watchedInfo}
+        const courseWithDurationLeft: CourseViewRouteData['course'] = course
+        return {course: courseWithDurationLeft, courseWatchInfo: courseWatchStats}
       })
-    )
+    );
   }
 }

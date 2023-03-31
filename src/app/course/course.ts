@@ -13,7 +13,7 @@ export interface Course {
 export interface CourseEntry {
   id: number;
   name: string;
-  duration: string;
+  readableDuration: string;
   isHighDefinition: boolean;
   watched: boolean
   section: string
@@ -33,29 +33,25 @@ export type CourseListPageData = {
 export type GetCourseView = {
   id: number;
   name: string;
-  duration: string;
+  readableDuration: string;
   categories?: string[];
   isHighDefinition: boolean;
   author?: string;
   platform?: string;
-
-  progress: number
   playlistId?: string
   entries?: CourseEntry[]
 }
 
 
-export type GetWatchedResponse = {
-  watchedCount: number,
+export type CourseWatchInfo = {
   watchedDuration: string,
   progress: number,
-  watchedEntries: Array<{ id: number }>,
+  watchedIdList: number[],
   durationLeft: string
 }
 
 
 export type CourseViewRouteData = {
-  course: GetCourseView & { durationLeft: string }
-
-  watchedInfo: GetWatchedResponse
+  course: GetCourseView // & { durationLeft: string }
+  courseWatchInfo: CourseWatchInfo
 }
