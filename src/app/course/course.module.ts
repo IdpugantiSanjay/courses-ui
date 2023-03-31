@@ -4,7 +4,6 @@ import {CourseListComponent} from './course-list/course-list.component';
 import {CourseViewComponent} from './course-view/course-view.component';
 import {RouterModule} from "@angular/router";
 import {CourseListResolver} from "./course-list.resolver";
-import {CourseResolver} from "./course.resolver";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { CourseEntryListComponent } from './course-entry-list/course-entry-list.component';
 import { CourseEntryNotesComponent } from './course-entry-notes/course-entry-notes.component';

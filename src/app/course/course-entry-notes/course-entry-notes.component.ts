@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {CourseService} from "../course.service";
 import {ActivatedRoute} from "@angular/router";
 import {Course} from "../course";
-import {delay, exhaustMap, Observable, Subject, tap} from "rxjs";
+import {Observable, Subject} from "rxjs";
 
 
 export const DEFAULT_NOTE_TEMPLATE = `###❗ Notes\n\n\n\n###❓ Research\n
@@ -36,7 +36,7 @@ export class CourseEntryNotesComponent implements OnInit {
     //   entryId: +this.route.snapshot.params['entryId']
     // }).subscribe(x => this.notes = x)
 
-    const HALF_SECOND = 500
+    // const HALF_SECOND = 500
     // this.save$
     //   .pipe(
     //     tap(() => this.buttonName = 'Saving...'),
