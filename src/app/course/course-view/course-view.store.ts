@@ -1,49 +1,73 @@
 import {Injectable} from '@angular/core';
-import {ComponentStore} from "@ngrx/component-store";
-import {Course, CourseEntry, CourseWatchInfo} from "../course";
+import {ComponentStore, tapResponse} from "@ngrx/component-store";
 import {map, Observable, switchMap, tap, withLatestFrom} from "rxjs";
 import {CourseService} from "../course.service";
 import {WatchService} from "../watch.service";
+import {Course, CourseEntry, CourseWatchInfo} from "../contracts";
 
-@Injectable({
-  providedIn: 'root'
-})
-export class CourseViewStore extends ComponentStore<{
+
+type CourseViewState = {
   course: Course | undefined,
   watchInfo: CourseWatchInfo | undefined,
   hideWatched: boolean,
   search: string
-}> {
+}
 
+
+function filterEntries(partialState: Omit<CourseViewState, 'watchInfo'>): CourseEntry[] {
+  const {course, search, hideWatched} = partialState;
+  const entries = course?.entries || []
+
+  let filtered = [...entries]
+  if (search) {
+    filtered = filtered.filter(x => x.name.toLowerCase().includes(search.toLowerCase()))
+  }
+  if (hideWatched) {
+    filtered = filtered.filter(x => !x.watched)
+  }
+  return filtered;
+}
+
+const CourseViewStateDefault: CourseViewState = Object.freeze({
+  course: undefined,
+  watchInfo: undefined,
+  hideWatched: false,
+  search: ''
+})
+
+@Injectable({
+  providedIn: 'root'
+})
+export class CourseViewStore extends ComponentStore<CourseViewState> {
+  // selectors
   readonly course$ = this.select(s => s.course)
-
-  readonly entries$ = this.select(s => {
-    const entries = s.course?.entries || [];
-    return entries.filter(x => {
-      let result = true
-      if (s.search) {
-        result = x.section.includes(s.search) || x.name.includes(s.search)
-      }
-      if (s.hideWatched && x.watched) {
-        result = false
-      }
-      return result;
-    })
+  readonly search$ = this.select(s => s.search)
+  readonly hideWatched$ = this.select(s => s.hideWatched)
+  readonly #selectorsToFilter$ = this.select({
+    course: this.course$,
+    hideWatched: this.hideWatched$,
+    search: this.search$
   })
-
+  readonly entries$ = this.select(this.#selectorsToFilter$, filterEntries, { debounce: true })
   readonly watchInfo$ = this.select(s => s.watchInfo)
-  readonly sections$ = this.select(s => s).pipe(map((state) => {
-    const sections = state.course?.entries?.map(e => e.section) || []
+  readonly sections$ = this.select(s => s.course).pipe(map((course) => {
+    const sections = course?.entries?.filter(e => !!e.section).map(e => e.section) || []
     return [...new Set(sections)];
   }))
-  readonly hasSections$ = this.sections$.pipe(map(x => Boolean(x)))
-  readonly hideWatched$ = this.select(s => s.hideWatched)
+  readonly hasSections$ = this.sections$.pipe(map(x => x.length))
   readonly canClear$ = this.select(s => s.hideWatched || !!s.search)
 
-  constructor(private course: CourseService, private watch: WatchService) {
-    super({course: undefined, watchInfo: undefined, search: '', hideWatched: false})
+  sectionEntries(section: string): Observable<CourseEntry[]> {
+    return this.entries$.pipe(
+      map(e => e?.filter(x => x.section === section) || [])
+    )
   }
 
+  constructor(private course: CourseService, private watch: WatchService) {
+    super({...CourseViewStateDefault})
+  }
+
+  // updaters
   readonly toggleHideWatched = this.updater((state) => {
     return {
       ...state,
@@ -57,22 +81,6 @@ export class CourseViewStore extends ComponentStore<{
       search: '',
       hideWatched: false
     }
-  })
-
-  readonly fetchCourse = this.effect((trigger$: Observable<{ courseId: number }>) => {
-    return trigger$.pipe(
-      switchMap(x => {
-        return this.course.Get(x.courseId).pipe(tap(x => this.#updateCourse(x)))
-      })
-    )
-  })
-
-  readonly fetchWatchInfo = this.effect((trigger$: Observable<{ courseId: number }>) => {
-    return trigger$.pipe(
-      switchMap(x => {
-        return this.watch.Get(x.courseId).pipe(tap(x => this.#updateWatchInfo(x)))
-      }),
-    )
   })
 
   #updateCourse(course: Course) {
@@ -93,6 +101,14 @@ export class CourseViewStore extends ComponentStore<{
     })
   }
 
+  setSearch(search: string) {
+    this.patchState({
+      search: search
+    })
+  }
+
+  // effects
+
   readonly setWatched = this.effect((trigger$: Observable<number>) => {
     return trigger$.pipe(
       withLatestFrom(this.course$),
@@ -100,7 +116,10 @@ export class CourseViewStore extends ComponentStore<{
         return this.watch.Create(course!.id, entryId)
       }),
       withLatestFrom(this.course$),
-      tap(([_, c]) => this.fetchWatchInfo({courseId: c!.id}))
+      tapResponse(
+        ([_, c]) => this.fetchWatchInfo({courseId: c!.id}),
+        (error) => console.error(error)
+      )
     )
   })
 
@@ -110,19 +129,26 @@ export class CourseViewStore extends ComponentStore<{
         return this.watch.Delete(entryId)
       }),
       withLatestFrom(this.course$),
-      tap(([_, c]) => this.fetchWatchInfo({courseId: c!.id}))
+      tapResponse(
+        ([_, c]) => this.fetchWatchInfo({courseId: c!.id}),
+        (error) => console.error(error)
+      )
     )
   })
 
-  sectionEntries(section: string): Observable<CourseEntry[]> {
-    return this.entries$.pipe(
-      map(e => e?.filter(x => x.section === section) || [])
+  readonly fetchCourse = this.effect((trigger$: Observable<{ courseId: number }>) => {
+    return trigger$.pipe(
+      switchMap(x => {
+        return this.course.Get(x.courseId).pipe(tap(x => this.#updateCourse(x)))
+      })
     )
-  }
+  })
 
-  setSearch(search: string) {
-    this.patchState({
-      search: search
-    })
-  }
+  readonly fetchWatchInfo = this.effect((trigger$: Observable<{ courseId: number }>) => {
+    return trigger$.pipe(
+      switchMap(x => {
+        return this.watch.Get(x.courseId).pipe(tap(x => this.#updateWatchInfo(x)))
+      }),
+    )
+  })
 }

@@ -1,25 +1,16 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
-import {CourseListPageData} from "../course";
+import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
+import {Course} from "../contracts";
+import {RouterModule} from "@angular/router";
+import {CommonModule} from "@angular/common";
 
 @Component({
   selector: 'app-course-list',
   templateUrl: './course-list.component.html',
-  styleUrls: ['./course-list.component.scss']
+  styleUrls: ['./course-list.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [CommonModule, RouterModule]
 })
-export class CourseListComponent implements OnInit {
-  courses!: CourseListPageData
-
-  constructor(private readonly route: ActivatedRoute) {
-  }
-
-  ngOnInit(): void {
-    this.route.data.subscribe(({courses}) => {
-      this.courses = courses
-    })
-  }
-
-  formatPercentage(progress: number) {
-    return Math.round(progress)
-  }
+export class CourseListComponent {
+  @Input() courses!: Course[]
 }

@@ -1,0 +1,18 @@
+<div class="container" *ngIf="{ inProgress: store.inProgress$ | async, notStarted: store.notStarted$ | async, completed: store.completed$ | async } as vm">
+
+  <details *ngIf="vm.notStarted?.length" open>
+    <summary>Yet to Start</summary>
+    <app-course-list [courses]="vm.notStarted || []"></app-course-list>
+  </details>
+
+  <details *ngIf="vm.inProgress?.length" open>
+    <summary>In Progress</summary>
+    <app-course-list [courses]="vm.inProgress || []"></app-course-list>
+  </details>
+
+  <details *ngIf="vm.completed?.length" open>
+    <summary>Completed</summary>
+    <app-course-list [courses]="vm.completed || []"></app-course-list>
+  </details>
+
+</div>

@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {CourseService} from "../course.service";
 import {ActivatedRoute} from "@angular/router";
-import {Course} from "../course";
 import {Observable, Subject} from "rxjs";
+import {Course} from "../contracts";
 
 
 export const DEFAULT_NOTE_TEMPLATE = `###❗ Notes\n\n\n\n###❓ Research\n

@@ -1,18 +1,22 @@
 import {ChangeDetectionStrategy, Component, Inject, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from "@angular/router";
+import {ActivatedRoute, Router, RouterModule} from "@angular/router";
 import {CourseService} from "../course.service";
-import {FormControl} from "@angular/forms";
+import {FormControl, ReactiveFormsModule} from "@angular/forms";
 import {Title} from "@angular/platform-browser";
-import {DOCUMENT} from "@angular/common";
+import {CommonModule, DOCUMENT} from "@angular/common";
 import {WatchService} from "../watch.service";
 import {CourseViewStore} from "./course-view.store";
-import {takeUntil, tap} from "rxjs";
+import {filter, takeUntil, tap} from "rxjs";
+import {CourseEntryListComponent} from "../course-entry-list/course-entry-list.component";
 
 @Component({
   selector: 'app-course-view',
   templateUrl: './course-view.component.html',
   styleUrls: ['./course-view.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [CourseViewStore],
+  standalone: true,
+  imports: [RouterModule, ReactiveFormsModule, CommonModule, CourseEntryListComponent]
 })
 export class CourseViewComponent implements OnInit {
   search = new FormControl('')
@@ -25,5 +29,9 @@ export class CourseViewComponent implements OnInit {
     this.store.fetchCourse({courseId})
     this.store.fetchWatchInfo({courseId})
     this.search.valueChanges.pipe(takeUntil(this.store.destroy$), tap(search => this.store.setSearch(search || ''))).subscribe()
+
+    this.store.course$.pipe(takeUntil(this.store.destroy$), filter(Boolean)).subscribe(
+      course => this.titleService.setTitle(course!.name)
+    )
   }
 }

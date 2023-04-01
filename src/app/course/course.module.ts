@@ -1,31 +1,25 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {CourseListComponent} from './course-list/course-list.component';
-import {CourseViewComponent} from './course-view/course-view.component';
 import {RouterModule} from "@angular/router";
-import {CourseListResolver} from "./course-list.resolver";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import { CourseEntryListComponent } from './course-entry-list/course-entry-list.component';
-import { CourseEntryNotesComponent } from './course-entry-notes/course-entry-notes.component';
+import {CourseEntryNotesComponent} from './course-entry-notes/course-entry-notes.component';
 
 
 @NgModule({
   declarations: [
-    CourseListComponent,
-    CourseViewComponent,
-    CourseEntryListComponent,
-    CourseEntryNotesComponent
+    CourseEntryNotesComponent,
   ],
   imports: [
     CommonModule,
     RouterModule.forChild([
       {
-        path: '', component: CourseListComponent, resolve: {
-          courses: CourseListResolver
-        }, pathMatch: 'prefix', title: 'Courses List'
+        path: '',
+        loadComponent: () => import('./courses-view/courses-view.component').then(m => m.CoursesViewComponent),
+        pathMatch: 'prefix',
+        title: 'Courses List',
       },
       {
-        path: ':id', component: CourseViewComponent
+        path: ':id', loadComponent: () => import('./course-view/course-view.component').then(m => m.CourseViewComponent)
       },
       {
         path: ':id/:entryId/notes', component: CourseEntryNotesComponent
