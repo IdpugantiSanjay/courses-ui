@@ -74,7 +74,7 @@ label {
 
 
 input[type="text"] {
-  background-color: var(--gray-7);
+  background-color: var(--surface-2);
 }
 
 
@@ -89,4 +89,9 @@ input[type="text"] {
   align-items: center;
 }
 
+
+
+//details[open] {
+//  animation: var(--animation-slide-in-up) forwards;
+//}
 

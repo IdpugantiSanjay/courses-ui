@@ -13,12 +13,25 @@
 
 
 :root {
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-sans);
   --size-2_point_5: 0.75rem;
 }
 
+
 .clock-icon {
-  fill: var(--gray-4);
+  fill: var(--gray-6);
+
+  @media (prefers-color-scheme: dark) {
+    fill: var(--gray-4);
+  }
+}
+
+.notes-icon {
+  fill: var(--gray-6);
+
+  @media (prefers-color-scheme: dark) {
+    fill: var(--gray-4);
+  }
 }
 
 .hd-icon {
@@ -51,5 +64,21 @@
   &__entry-active {
     opacity: 1;
     font-weight: var(--font-weight-5);
+  }
+}
+
+
+details[open] summary ~ * {
+  animation: sweep .5s ease-in-out;
+}
+
+@keyframes sweep {
+  0% {
+    opacity: 0;
+    transform: translateX(-10px)
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0)
   }
 }

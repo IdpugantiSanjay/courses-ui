@@ -1,14 +1,15 @@
-<div *ngFor="let course of courses">
-  <article class="course" [routerLink]="course.id.toString()">
-    <div class="course__name">
-      <a *ngIf="!!course.playlistId; else normal" href="https://www.youtube.com/playlist?list={{course.playlistId}}"
-         target="_blank">{{ course.name }}</a>
-      <ng-template #normal>
-        {{ course.name }}
-      </ng-template>
-    </div>
-    <div class="course__info">
-      <div class="course__info__duration">
+
+  <div *ngFor="let course of courses" >
+    <article class="course" [routerLink]="course.id.toString()">
+      <div class="course__name">
+        <a *ngIf="!!course.playlistId; else normal" href="https://www.youtube.com/playlist?list={{course.playlistId}}"
+           target="_blank">{{ course.name }}</a>
+        <ng-template #normal>
+          {{ course.name }}
+        </ng-template>
+      </div>
+      <div class="course__info">
+        <div class="course__info__duration">
       <span>
         <svg class="clock-icon" width="16" height="16" viewBox="0 0 16 16" fill="none"
              xmlns="http://www.w3.org/2000/svg">
@@ -23,10 +24,10 @@
         </defs>
       </svg>
       </span>
-        <span> {{ course.readableDuration }} </span>
-      </div>
+          <span> {{ course.readableDuration }} </span>
+        </div>
 
-      <div class="course__info__hd" *ngIf="course.isHighDefinition">
+        <div class="course__info__hd" *ngIf="course.isHighDefinition">
             <span title="HD">
               <svg width="16" height="16" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"
                    class="hd-icon">
@@ -42,7 +43,10 @@
               </defs>
             </svg>
             </span>
+        </div>
       </div>
-    </div>
-  </article>
-</div>
+    </article>
+  </div>
+
+
+
